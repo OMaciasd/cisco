@@ -1,0 +1,17 @@
+enable
+
+configure terminal
+
+vlan 40
+name VENTAS
+
+interface vlan 1
+ip address 10.0.40.254 255.255.255.0
+no shutdown
+
+interface FastEthernet8/1
+switchport mode access
+switchport access vlan 40
+no shutdown
+
+do write memory

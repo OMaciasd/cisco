@@ -1,0 +1,17 @@
+enable
+
+configure terminal
+
+vlan 50
+name INGENIERIA
+
+interface vlan 1
+ip address 10.0.50.254 255.255.255.0
+no shutdown
+
+interface FastEthernet8/1
+switchport mode access
+switchport access vlan 50
+no shutdown
+
+do write memory

@@ -1,0 +1,18 @@
+enable
+
+configure terminal
+
+vlan 60
+name IT
+
+interface vlan 1
+ip address 10.0.60.254 255.255.255.0
+no shutdown
+
+interface FastEthernet8/1
+switchport mode access
+switchport access vlan 60
+spanning-tree portfast
+no shutdown
+
+do write memory

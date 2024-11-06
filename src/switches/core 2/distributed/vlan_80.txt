@@ -1,0 +1,30 @@
+enable
+
+configure terminal
+
+interface vlan 1
+ip address 10.0.1.253 255.255.255.0
+no shutdown
+
+vlan 60
+name IT
+
+vlan 70
+name INVITADOS
+
+vlan 80
+name MANTENIMIENTO
+
+interface FastEthernet8/1
+switchport mode trunk
+switchport trunk allowed vlan 80
+spanning-tree portfast
+no shutdown
+
+vlan 90
+name SEGURIDAD
+
+vlan 100
+name VoIP
+
+do write memory
