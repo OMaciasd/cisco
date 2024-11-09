@@ -1,20 +1,17 @@
-# 📋 CISCO Packet Tracer
+# 📋 Cisco Packet Tracer Network Project
 
-This project implements a basic CRUD form for managing items. The Frontend is built using HTML, CSS, and JavaScript. The components are containerized in Docker and orchestrated with Docker Compose to facilitate deployment with NGINX as a Proxy Server.
+This project implements a basic network topology using Cisco Packet Tracer. The topology organizes a network into multiple VLANs to support different departments within a hypothetical organization. The goal is to enhance network security and performance by logically segmenting network traffic and facilitating inter-departmental communication through appropriate routing and access control lists (ACLs).
 
 ## 🗂️ Table of Contents
 
-- [📋 CRUD Project with Frontend](#-crud-project-with-frontend)
-  - [🗂️ Table of Contents](#️-table-of-contents)
+- [📋 Cisco Packet Tracer Network Project](#-cisco-packet-tracer-network-project)
   - [📖 Project Description](#-project-description)
     - [🛑 Considerations](#-considerations)
     - [📂 Project Structure](#-project-structure)
   - [✅ Requirements](#-requirements)
   - [🔧 Installation and Setup](#-installation-and-setup)
-  - [🚀 Running the Project](#-running-the-project)
-  - [⚙️ CI/CD and Deployment on Render](#️-cicd-and-deployment-on-render)
-    - [CI Pipeline](#ci-pipeline)
-    - [🌐 Deployment on Render](#-deployment-on-render)
+  - [🚀 Running the Network Simulation](#-running-the-network-simulation)
+  - [⚙️ Network Security](#️-network-security)
   - [🛠️ Technologies Used](#️-technologies-used)
   - [🏗️ Architecture](#️-architecture)
   - [🤝 Contributing](#-contributing)
@@ -22,120 +19,89 @@ This project implements a basic CRUD form for managing items. The Frontend is bu
 
 ## 📖 Project Description
 
-This project allows the management of items via a basic CRUD form, where you can:
+This project simulates a network environment within an organization, implementing VLANs (Virtual Local Area Networks) to segment traffic across different departments. Each VLAN represents a department with its own subnet, as described below:
 
-- Add a new item.
-- View a list of items.
-- Edit an existing item.
-- Delete an item.
-
-The data can be stored in either a JSON file or a database.
+| VLAN | Department         | Subnet           | Core Switch |
+|------|---------------------|------------------|-------------|
+| 10   | Administration      | 10.0.10.0/24     | 1           |
+| 20   | Finance            | 10.0.20.0/24     | 1           |
+| 30   | Human Resources    | 10.0.30.0/24     | 1           |
+| 40   | Sales              | 10.0.40.0/24     | 1           |
+| 50   | Engineering        | 10.0.50.0/24     | 1           |
+| 60   | IT                 | 10.0.60.0/24     | 2           |
+| 70   | Guest              | 10.0.70.0/24     | 2           |
+| 80   | Maintenance        | 10.0.80.0/24     | 2           |
+| 90   | Security           | 10.0.90.0/24     | 2           |
+| 100  | VoIP               | 10.0.100.0/24    | 2           |
 
 ### 🛑 Considerations
 
-- **Security**: For this test, advanced security mechanisms such as authentication or thorough data validation have not been included.
+- **Security**: ACLs are configured to restrict access between certain VLANs to ensure data privacy. For instance, sensitive departments like Finance and Human Resources have restricted access.
+- **Inter-VLAN Routing**: Routers are configured to facilitate communication between departments where necessary.
+- **Redundancy and Failover**: Core switches are set up to support failover for critical VLANs.
 
 ### 📂 Project Structure
 
 ```plaintext
 .
-├── .github
-│   ├── dependabot.yml
-│   └── workflows
-│       ├── cd-pipeline.yml
-│       └── ci-pipeline.yml
-├── src/
-│   ├── templates
-│   │   └── index.html
-│   └── static
-│       ├── styles.css
-│       └── script.js
-├── docker-compose.yml
+├── PacketTracerFiles/
+│   ├── CompanyTopology.pkt      # Packet Tracer project file with network topology
+├── Documentation/
+│   ├── NetworkDiagram.png       # Network architecture diagram
+│   ├── VLAN_Config_Guide.md     # Detailed VLAN and ACL configuration instructions
 └── README.md
-
 ```
 
 ## ✅ Requirements
 
-- [node](https://nodejs.org/en).
-- 🐳 [Docker](https://www.docker.com/get-started).
-- [Docker Compose](https://docs.docker.com/compose/).
-- Git.
-- [GitHub Actions](https://docs.github.com/en/actions).
+- Cisco Packet Tracer 8.0 or later.
+- Basic knowledge of networking, VLANs, and Cisco CLI commands.
 
 ## 🔧 Installation and Setup
 
-1. Clone the frontend and backend repositories from GitHub:
+1. Clone the repository to access the Packet Tracer file:
 
     ```bash
-    git clone https://github.com/omaciasd/form-javascript.git
-
+    git clone https://github.com/your-username/cisco-network-project.git
+    cd cisco-network-project/
     ```
 
-2. Navigate to each project folder:
+2. Open the `CompanyTopology.pkt` file in Cisco Packet Tracer to load the network simulation.
 
-    ```bash
-    cd form-javascript/
+## 🚀 Running the Network Simulation
 
-    ```
+1. **Load the Topology**:
+   - Open the `CompanyTopology.pkt` file in Cisco Packet Tracer.
 
-## 🚀 Running the Project
+2. **Test VLAN Connectivity**:
+   - Use **Ping** to test connectivity within and across VLANs. For example:
+     - Ping a device within the same VLAN (e.g., Administration).
+     - Test inter-VLAN routing by pinging a device from a different VLAN, such as IT to Engineering.
 
-To start the complete application using Docker Compose:
+3. **Apply ACLs**:
+   - Navigate to the router or Layer 3 switch and apply ACLs to restrict or allow specific traffic flows as per the configuration in `VLAN_Config_Guide.md`.
 
-1. Navigate to the folder where the `docker-compose.yml` file is located and run:
+## ⚙️ Network Security
 
-    | VLAN | Nombre           | Subred           | CORE |
-    |------|------------------|------------------|------|
-    | 10   | Administración   | 10.0.10.0/24     |   1  |
-    | 20   | Finanzas         | 10.0.20.0/24     |   1  |
-    | 30   | Recursos Humanos | 10.0.30.0/24     |   1  |
-    | 40   | Ventas           | 10.0.40.0/24     |   1  |
-    | 50   | Ingeniería       | 10.0.50.0/24     |   1  |
-    | 60   | IT               | 10.0.60.0/24     |   2  |
-    | 70   | Invitados        | 10.0.70.0/24     |   2  |
-    | 80   | Mantenimiento    | 10.0.80.0/24     |   2  |
-    | 90   | Seguridad        | 10.0.90.0/24     |   2  |
-    | 100  | VoIP             | 10.0.100.0/24    |   2  |
-
-2. ## 🌐 Accessing the Application
-
-- The **frontend** will be available by NGINX as inverse proxy [http://localhost:80](http://localhost:80).
-
-## ⚙️ CI/CD and Deployment on Render
-
-This project uses **GitHub Actions** for Continuous Integration (CI) and **Render** for Continuous Deployment (CD).
-
-### CI Pipeline
-
-Every time a *push* is made to the `main` branch, the following pipeline is triggered:
-
-1. **Unit testing**: Automated tests are run to ensure code integrity.
-2. **Docker image build**: Docker images for both frontend and backend are built.
-3. **Render deployment**: If all steps pass successfully, the application is deployed to **Render**.
-
-### 🌐 Deployment on Render
-
-The project is configured to be deployed on **Render**, which provides a managed server infrastructure for both applications (frontend and backend).
-
-- **Frontend** is deployed as a web service accessible at [https://form-javascript.render.com](https://form-javascript-onyv.onrender.com).
+In this network topology:
+- **ACLs** (Access Control Lists) are implemented to restrict sensitive VLANs, like Finance and HR, from accessing non-essential resources.
+- Separate **VLANs** for **Guest** and **VoIP** ensure guest users and voice traffic are isolated from critical business traffic.
+- **Core Switches** are designated to ensure optimal routing paths and support failover mechanisms for high availability.
 
 ## 🛠️ Technologies Used
 
-- **Frontend**: HTML, CSS, JavaScript.
-- **DevOps**: Docker, Docker Compose.
-- **CI/CD**: GitHub Actions, Render.
-- **🚧 TDD**: Postman, CURL.
+- **Cisco Packet Tracer**: Network simulation.
+- **VLANs**: Network segmentation.
+- **ACLs**: Traffic management and security.
+- **Routing Protocols**: For inter-VLAN routing.
 
 ## 🏗️ Architecture
 
-For detailed information on the system's architecture, including design decisions and component interactions, refer to the [Architecture Guide](./docs/guides/ARCHITECTURE.md).
+For detailed information on the network architecture and configuration guidelines, refer to the Network Diagram and the VLAN Config Guide, [Architecture Guide](./docs/guides/ARCHITECTURE.md)..
 
 ## 🤝 Contributing
 
-To contribute to this project, please check out our [Contribution Guide](./docs/guides/CONTRIBUTING.md) for instructions on setting up your development environment and the process for submitting contributions.
-
-Describe how to contribute to the project’s documentation
+To contribute, please review the Contribution Guide for setup instructions and best practices,  [Contribution Guide](./docs/guides/CONTRIBUTING.md).
 
 ## 📜 License
 
