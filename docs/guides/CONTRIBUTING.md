@@ -1,21 +1,20 @@
-# **Contribution Guide**
+# **Cisco Packet Tracer Contribution Guide**
 
 ## **Contents**
 
-- [**Contribution Guide**](#contribution-guide)
+- [**Cisco Packet Tracer Contribution Guide**](#cisco-packet-tracer-contribution-guide)
   - [**Contents**](#contents)
   - [🧩 **Project Structure**](#-project-structure)
   - [🔒 Managing Sensitive Files](#-managing-sensitive-files)
     - [`.env` Files](#env-files)
-    - [JSON Files](#json-files)
+    - [Configuration Files](#configuration-files)
   - [**Setting Up the Development Environment**](#setting-up-the-development-environment)
-    - [**Setting Environment Variables**](#setting-environment-variables)
+    - [**Setting Network Variables**](#setting-network-variables)
   - [**Workflow**](#workflow)
     - [**Creating Branches**](#creating-branches)
   - [🔍 **Testing and Verification**](#-testing-and-verification)
-    - [**Code Standards**](#code-standards)
-    - [✅ **Test Coverage**](#-test-coverage)
-    - [✅ **Load Testing**](#-load-testing)
+    - [**Network Standards**](#network-standards)
+    - [✅ **Packet Tracer Network Simulation**](#-packet-tracer-network-simulation)
   - [**Commit Messages**](#commit-messages)
   - [**Submitting Pull Requests**](#submitting-pull-requests)
   - [Code Review](#code-review)
@@ -24,135 +23,91 @@
 
 ## 🧩 **Project Structure**
 
-**app/**: Contains the main application code.
-**config/**: Configuration files for different environments.
-**docker/**: Docker-related files.
-**tests/**: Test cases for the application.
+**network/**: Contains the main Packet Tracer network topology files.  
+**config/**: Configuration files for different VLAN and routing protocols.  
+**scripts/**: Scripts for automating network setup and configuration in Cisco Packet Tracer.  
+**tests/**: Network simulation test cases and verification files.  
 
 ## 🔒 Managing Sensitive Files
 
 ### `.env` Files
 
-- **Description**: The **`.env`** file contains essential environment variables for project configuration, such as credentials and API keys.
+- **Description**: The **`.env`** file may contain sensitive information related to the network configuration, such as usernames, passwords, and API keys for Cisco configurations.
 
-- **Setup**: Create a **`.env`** file in the root of the project using the **`.env-example.txt`** file as a reference. Fill it with your own variables.
+- **Setup**: Create a **`.env`** file in the root of the project based on the **`.env-example.txt`** file. This file should contain any sensitive network credentials.
 
-- **Important**: The **`.env`** file is listed in **`.gitignore`** to prevent it from being uploaded to the repository.
+- **Important**: The **`.env`** file is in **`.gitignore`** to ensure it is not uploaded to the repository.
 
-### JSON Files
+### Configuration Files
 
-- **Description**: The **`data.json`** file may contain environment-specific or sensitive data.
+- **Description**: The configuration files define the network settings, such as VLANs, IP addresses, and routing protocols.
 
-- **Example File**: Use the **`json-example.txt`** file as a reference to understand the structure of the JSON file. Do not include sensitive data in the repository.
+- **Example Files**: Use **`config-example.txt`** as a template to set up your network configurations.
 
 ## **Setting Up the Development Environment**
 
-### **Setting Environment Variables**
+### **Setting Network Variables**
 
-- If necessary, explain how to configure environment variables to make the project work correctly.
+- **Network Topology**: Review the VLAN configuration and subnets provided for setting up switches, routers, and other network devices. Ensure IP addressing, subnetting, and routing protocols align with the project’s requirements.
+
+  | VLAN | Department       | Subnet          | Core Router |
+  |------|------------------|-----------------|-------------|
+  | 10   | Administration   | 10.0.10.0/24    | CORE 1      |
+  | 20   | Finance          | 10.0.20.0/24    | CORE 1      |
+  | 30   | Human Resources  | 10.0.30.0/24    | CORE 1      |
+  | 40   | Sales            | 10.0.40.0/24    | CORE 1      |
+  | 50   | Engineering      | 10.0.50.0/24    | CORE 1      |
+  | 60   | IT               | 10.0.60.0/24    | CORE 2      |
+  | 70   | Guests           | 10.0.70.0/24    | CORE 2      |
+  | 80   | Maintenance      | 10.0.80.0/24    | CORE 2      |
+  | 90   | Security         | 10.0.90.0/24    | CORE 2      |
+  | 100  | VoIP             | 10.0.100.0/24   | CORE 2      |
 
 ## **Workflow**
 
 ### **Creating Branches**
 
-- The solution is organized using the **GitFlow** workflow, which facilitates structured development and integration.
+- This project uses the **GitFlow** workflow for structured development. Each contribution should follow this workflow:
 
-- We welcome contributions! Please follow these steps:
-
-1. Fork the repository.
-
-   ![fetch](../assets/images/git/git-fetch.png)
-
-2. Create a new branch (`git flow feature start new-feature`).
-
-   ![gitflow](../assets/images/git/git.png)
-
-3. Commit your changes (`git commit -am 'Add new feature'`).
-
-   ![flow](../assets/images/git/git-flow.png)
-
-4. Push to the branch (`git push origin develop`).
-
-   ![push](../assets/images/git/git-push.png)
-
-5. Open a Pull Request.
+1. **Fork the Repository**.
+2. **Create a Branch** following the GitFlow conventions (e.g., `feature/vlan-setup`).
+3. **Commit and Push** your changes.
+4. **Submit a Pull Request** for review.
 
 ## 🔍 **Testing and Verification**
 
-### **Code Standards**
+### **Network Standards**
 
-- Follow the PEP 8 style guide for Python code.
+- Ensure configurations follow Cisco best practices for VLAN, routing, and security.
+- Adhere to IP addressing standards for consistency and avoid address conflicts.
 
-### ✅ **Test Coverage**
+### ✅ **Packet Tracer Network Simulation**
 
-``` powershell
-$env:PYTHONPATH="C:\Users\$USER\challenge_sre\src\"
-pytest --cov=src src/tests/development --cov-report=html:src/tests/development/coverage.html
-
-```
-
-![pytest](../assets/images/app/pytest.png)
-
-- **`--cov=src specifies`** the folder where the source code is located.
-
-- **`--cov-report=html`** generates an HTML report, which is saved in the htmlcov folder.
-
-![coverage](../assets/images/app/coverage.png)
-
-### ✅ **Load Testing**
-
-- **Tools Used**
-
-  - **Locust**: An easy-to-use tool for distributed load testing.
-
-  - **Apache JMeter**: A performance testing tool that can simulate multiple users.
-
-``` python
-locust -f locustfile.py
-```
-
-- **Access Locust Web Interface**: Once Locust is running, open your browser and go to [web server](http://localhost:8089) to start the load test and monitor performance in real-time.
-
-- **Load Test Results**
-
-  - Response Time: [Details on response times under load]
-
-  - Resource Usage: [Details on CPU and memory usage]
-
-  - Errors: [Details on any errors encountered during testing]
+- **Testing Tools**: Cisco Packet Tracer simulations and network verification tools.
+- **Network Verification**: Test all VLANs, subnets, and connectivity between devices.
+  - Ensure that all departments in each VLAN can communicate within their subnet.
+  - Verify inter-VLAN routing based on the core routers.
+  - Validate security policies to ensure restricted access where applicable.
 
 ## **Commit Messages**
 
-- Follow these conventions for commit messages:
-
-  - Use the imperative mood: "Fix bug" instead of "Fixed bug".
-
-  - Include the issue number if applicable.
+- Use clear and descriptive commit messages to document changes. For example:
+  - `Add VLAN 10 configuration for Administration`
+  - `Configure routing between VLAN 20 and VLAN 50`
 
 ## **Submitting Pull Requests**
 
-- Submit a Pull Request with a description of the changes and link to any related issues.
+- Include a description of the changes and link to any related issues or network topology documentation.
 
 ## Code Review
 
-- Pull requests are reviewed by project maintainers. Ensure your code meets the project's standards and passes all tests.
+- Pull requests will be reviewed to ensure compliance with Cisco networking standards and project guidelines.
 
 ## 📂 Verifying the Pipeline in the Repository
 
-To verify the CI/CD pipeline configured in this repository:
-
-1. **View Workflows:**
-   - Navigate to the **Actions** tab in GitHub to see the configured workflows. Here, you can view the executed CI/CD pipelines and their status (success or failure).
-
-2. **Review Executions:**
-   - Within the **Actions** tab, select a specific workflow run to view details. You can review the logs of each step, from code linting to deployment.
-
-3. **Manual Execution:**
-   - If you have the appropriate permissions, you can manually trigger a workflow from the Actions tab, allowing you to test the pipeline on any specific branch or commit.
-
-4. **Configuration Files:**
-   - Check the `.github/workflows/main.yml` file in the root of the repository to understand the pipeline configuration. This file defines the steps and actions executed during the CI/CD process.
+1. **CI/CD Pipeline**: Check the **Actions** tab in GitHub to review the CI/CD status.
+2. **View Logs**: Each pipeline step provides logs for network simulations and testing.
 
 ## **Documentation Contributions**
 
-- For contributing to documentation, follow the same branch and PR process as code contributions.
+- Follow the same process for contributing to documentation. Describe changes to network topologies, configuration guides, or VLAN setups in your PR description.
